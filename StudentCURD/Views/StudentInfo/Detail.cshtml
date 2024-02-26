@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "Details Page";
+}
+@inject Infrastructure.Data.ApplicationDbContext dbContext
+@model Core.Entities.StudentTable
+
+<div class="container">
+    <style>
+        .data{
+            background-color: whitesmoke;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        }
+        .text{
+            font-size: 23px;
+            font-weight: 600;
+        }
+    </style>
+    <section class="data">
+        <h4>Id: @Model.Id</h4>
+        <h4>Name: @Model.Name</h4>
+        <h4>Gender: @(Model.Gender == 0 ? "Male" : "Female")</h4>
+        <h4>Date Of Birth: @Model.DOB</h4>
+        <h4>Carete Date: @Model.CreatedDate</h4>
+        <h4>Modification Date: @Model.ModificationDate</h4>
+        <span class="text">Class: </span>
+        @{
+            string className = "";
+            var classEntity = dbContext?.Classes?.FirstOrDefault(c => c.Id == Model.ClassId);
+            if (classEntity != null)
+            {
+                className = classEntity.Name;
+            }
+        }
+        <span class="text">@className</span>
+    </section>
+</div>
