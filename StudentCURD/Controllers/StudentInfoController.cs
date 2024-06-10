@@ -1,10 +1,12 @@
 ﻿using Core.Entities;
 using Core.Interface;
 using Core.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace StudentCURD.Controllers
 {
+   
     public class StudentInfoController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -13,12 +15,14 @@ namespace StudentCURD.Controllers
             this._unitOfWork = unitOfWork;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult StudentInfoAdd()
         {
             return View();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> StudentInfoAdd(AddStudentViewModel addStudentViewModel)
         {
@@ -40,6 +44,7 @@ namespace StudentCURD.Controllers
             return RedirectToAction("StudentList", "Home");
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -51,6 +56,7 @@ namespace StudentCURD.Controllers
             return View();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(StudentTable viewModel)
         {
@@ -71,6 +77,7 @@ namespace StudentCURD.Controllers
             return View();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost("{id}")]
         public async Task<IActionResult> Delete(StudentTable viewModel)
         {

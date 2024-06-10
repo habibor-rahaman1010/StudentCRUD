@@ -12,29 +12,22 @@
         <div class="mt-3">
             <label for="studentName" class="form-label">Name </label>
             <input type="text" id="studentName" class="form-control" asp-for="Name" />
+            <span asp-validation-for="Name" class="text-danger"></span> <!-- Display validation error message -->
         </div>
 
         <div class="mt-3">
             <label for="classId" class="form-label">Class </label>
             <select id="classId" class="form-select" asp-for="ClassId">
-                @{
-                    List<SelectListItem>? classNames = dbContext?.Classes?.Select(c => new SelectListItem
+                <option value="">Select Class</option>
+                @if (dbContext?.Classes != null)
+                {
+                    foreach (var className in dbContext.Classes)
                     {
-                        Value = c.Id.ToString(),
-                        Text = c.Name
-                    }).ToList();
-
-                    classNames?.Insert(0, new SelectListItem { Value = "", Text = "Select Class" });
-
-                    if (classNames != null)
-                    {
-                        foreach (var className in classNames)
-                        {
-                            <option value="@className.Value">@className.Text</option>
-                        }
+                        <option value="@className.Id">@className.Name</option>
                     }
                 }
             </select>
+            <span asp-validation-for="ClassId" class="text-danger"></span> <!-- Display validation error message -->
         </div>
 
         <div class="mt-3">
@@ -47,21 +40,29 @@
                 <input type="radio" id="female" name="Gender" class="form-check-input" value="1" />
                 <label for="female" class="form-check-label">Female</label>
             </div>
+            <span asp-validation-for="Gender" class="text-danger"></span> <!-- Display validation error message -->
         </div>
 
         <div class="mt-3">
             <label for="dateOfBirth" class="form-label">Date Of Birth </label>
             <input type="date" id="dateOfBirth" class="form-control" asp-for="DOB" />
+            <span asp-validation-for="DOB" class="text-danger"></span> <!-- Display validation error message -->
         </div>
 
         <div class="mt-3">
             <label for="createDate" class="form-label">Create Date </label>
             <input type="datetime-local" id="createDate" class="form-control" asp-for="CreatedDate" />
+            <span asp-validation-for="CreatedDate" class="text-danger"></span> <!-- Display validation error message -->
         </div>
 
         <div class="mt-5">
-            <button type="submit" class="btn btn-success"> Save Student</button>
+            <button type="submit" class="btn btn-success">Save Student</button>
         </div>
     </form>
-
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

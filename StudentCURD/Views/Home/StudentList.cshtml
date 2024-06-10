@@ -2,6 +2,9 @@
     ViewData["Title"] = "Home Page";
 }
 @inject Infrastructure.Data.ApplicationDbContext dbContext
+@using Microsoft.AspNetCore.Identity
+@using Core.Entities;
+@inject SignInManager<ApplicationUser> SignInManager
 @model List<Core.Entities.StudentTable>
 
 <style>
@@ -49,13 +52,20 @@
                     <td>@(student.Gender == 0 ? "Male" : "Female")</td>
                     
                     <td class="my_button">
-                        <a class="btn btn-info" asp-controller="StudentInfo" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
+
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                        {
+                            <a class="btn btn-info" asp-controller="StudentInfo" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
+                        }
                         <a class="btn btn-secondary" asp-controller="StudentInfo" asp-action="Detail" asp-route-id="@student.Id">Details</a>
-                        <span>
-                            <form id="deleteForm" asp-controller="StudentInfo" asp-action="Delete" asp-route-id="@student.Id" method="post">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </span>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                        {
+                            <span>
+                                <form id="deleteForm" asp-controller="StudentInfo" asp-action="Delete" asp-route-id="@student.Id" method="post">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </span>
+                        }
                     </td>
                 </tr>
             }

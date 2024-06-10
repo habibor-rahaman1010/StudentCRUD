@@ -2,6 +2,9 @@ using Core.Interface;
 using Infrastructure.Data;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Core.Entities;
+
 
 namespace StudentCURD
 {
@@ -14,6 +17,11 @@ namespace StudentCURD
             // Database connectiong here...
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -34,12 +42,14 @@ namespace StudentCURD
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=StudentList}/{id?}");
+            app.MapRazorPages();
 
             app.Run();
         }
