@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Core.Entities;
+@model BlogPostTable;
+@inject SignInManager<ApplicationUser> SignInManager;
+
+<div class="container border mt-5 mb-5">
+    <section class="px-4 py-3">
+        <div>
+            <h3>@Model.Title</h3>
+            <p>Created: @Model.Created</p>
+            <p>Updated: @Model.Updated</p>
+            <p>Author: @Model.Author</p>
+            <p>Category: <a asp-controller="BlogCategory" asp-action="GetBlogPostByCategoryWise" asp-route-categoryId="@Model?.CategoryId">@Model?.Category?.CategoryName</a></p>
+            
+        </div>
+
+        <div class="mt-4">
+            <p>@Html.Raw(Model?.Content)</p>
+        </div>
+    </section>
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+    {
+        <div class="mb-4 px-4 d-flex">
+            <div>
+                <a class="btn btn-success mx-2" asp-controller="BlogPost" asp-action="Update" asp-route-id="@Model?.Id">Update Post</a>
+            </div>
+            <div>
+                <form id="deleteForm" asp-controller="BlogPost" asp-action="Delete" asp-route-id="@Model?.Id" method="post">
+                    <button type="submit" class="btn btn-danger" itle="Delete Item" onclick="return confirm('Are you sure you want to delete @Model?.Title')">Delete</button>
+                </form>
+            </div>
+        </div>
+    }
+</div>

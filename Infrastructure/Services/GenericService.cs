@@ -1,4 +1,6 @@
-﻿using Core.Interface;
+﻿using Core.Entities;
+using Core.Interface;
+using Core.ViewModel;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -21,6 +23,27 @@ namespace Infrastructure.Services
         public async Task<List<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
+        }
+
+        public async Task<PagerViewModel<T>> GetAllByPageSizeAsync(int page = 1)
+        {
+            var students =  await _context.Set<T>().ToListAsync();
+            const int pageSize = 5;
+            if (page < 1)
+            {
+                page = 1;
+            }
+            int recsCount = students.Count();
+            var pager = new Pager(recsCount, page, pageSize);
+            int recSkip = (page - 1) * pageSize;
+            var data = students.Skip(recSkip).Take(pageSize).ToList();
+
+            var viewModel = new PagerViewModel<T>
+            {
+                Students = data,
+                Pager = pager
+            };
+            return viewModel;
         }
 
         public async Task<T> GetByIdAsync(Guid id)

@@ -1,0 +1,32 @@
+﻿@using Core.Entities;
+@model Core.ViewModel.PagerViewModel<StudentTable>
+
+<div class="container">
+    @if (Model?.Pager?.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+            @if (Model?.Pager.CurrentPage > 1)
+            {
+                <li class="page-item d-flex">
+                    <a class="page-link" asp-controller="Home" asp-action="StudentList" asp-route-page="1">First</a>
+                    <a class="page-link" asp-controller="Home" asp-action="StudentList" asp-route-page="@(Model.Pager.CurrentPage - 1)">Privious</a>
+                </li>
+            }
+
+            @for (var pge = Model?.Pager?.StartPage; pge <= Model?.Pager?.EndPage; pge++)
+            {
+                <li class="page-item @(pge == Model?.Pager?.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Home" asp-action="StudentList" asp-route-page="@pge">@pge</a>
+                </li>
+            }
+
+            @if (Model?.Pager.CurrentPage < Model?.Pager.TotalPages)
+            {
+                <li class="page-item d-flex">
+                    <a class="page-link" asp-controller="Home" asp-action="StudentList" asp-route-page="@(Model.Pager.CurrentPage + 1)">Next</a>
+                    <a class="page-link" asp-controller="Home" asp-action="StudentList" asp-route-page="@(Model.Pager.TotalPages)">Last</a>
+                </li>
+            }
+        </ul>
+    }
+</div>

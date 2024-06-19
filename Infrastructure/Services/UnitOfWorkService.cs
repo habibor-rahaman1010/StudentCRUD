@@ -14,12 +14,20 @@ namespace Infrastructure.Services
         private bool _disposed;
 
         public IStudentInfo StudentInfo { get; set; }
+        public IBlogPost BlogPost {  get; set; }
+        public ICategory Category { get; set; }
 
-
-        public UnitOfWorkService(ApplicationDbContext context, IStudentInfo studentinfo)
+        public UnitOfWorkService(
+            ApplicationDbContext context, 
+            IStudentInfo studentinfo, 
+            IBlogPost blogPost,
+            ICategory category
+        )
         {
             _context = context ?? throw new ArgumentException(nameof(context));
             StudentInfo = new StudentInfoService(context);
+            BlogPost = new BlogPostService(context);
+            Category = category;
         }
 
         public async Task<int> CommitAsync()

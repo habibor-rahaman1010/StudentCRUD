@@ -102,6 +102,62 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Entities.BlogPostTable", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("Updated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("BlogPosts");
+                });
+
+            modelBuilder.Entity("Core.Entities.CategoryTable", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("Core.Entities.ClassTable", b =>
                 {
                     b.Property<int>("Id")
@@ -128,113 +184,113 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4170),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4170),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1826),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1826),
                             Name = "One"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4172),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4173),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1828),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1828),
                             Name = "Two"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4174),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4175),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1830),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1830),
                             Name = "Three"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4176),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4177),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1831),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1832),
                             Name = "Four"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4178),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4178),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1833),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1833),
                             Name = "Five"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4180),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4180),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1834),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1835),
                             Name = "Six"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4181),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4182),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1836),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1836),
                             Name = "Seven"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4183),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4183),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1838),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1838),
                             Name = "Eight"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4185),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4185),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1839),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1839),
                             Name = "Nine"
                         },
                         new
                         {
                             Id = 10,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4186),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4186),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1841),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1841),
                             Name = "Ten"
                         },
                         new
                         {
                             Id = 11,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4189),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4189),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1842),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1843),
                             Name = "Colleage First Year"
                         },
                         new
                         {
                             Id = 12,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4191),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4191),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1844),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1844),
                             Name = "Colleg Second Year"
                         },
                         new
                         {
                             Id = 13,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4192),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4192),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1845),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1846),
                             Name = "BSc In CSE"
                         },
                         new
                         {
                             Id = 14,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4194),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4194),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1847),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1847),
                             Name = "BSc In EEE"
                         },
                         new
                         {
                             Id = 15,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4195),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4195),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1848),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1849),
                             Name = "BSc In CS"
                         },
                         new
                         {
                             Id = 16,
-                            CreatedDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4197),
-                            ModificationDate = new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4197),
+                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1850),
+                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1850),
                             Name = "BSc In Civil"
                         });
                 });
@@ -312,15 +368,15 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "86829880-ebec-45e3-b11a-b69a402d8007",
-                            ConcurrencyStamp = "7c577218-b19d-48b2-9042-5f445180e854",
+                            Id = "9cbb5734-34be-4a91-b7f0-2c9c21c17813",
+                            ConcurrencyStamp = "68a92d34-db1b-45f3-b903-6437f460ae20",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "8c3018a2-5322-4f38-854b-06104a34c692",
-                            ConcurrencyStamp = "dd7c76dc-ad13-4f4d-be95-df7d89951777",
+                            Id = "00548c01-6b7d-410d-a3e7-d5076919bf5b",
+                            ConcurrencyStamp = "ebd7bc53-76af-46c0-9ac3-16e9c3ebddcf",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -436,6 +492,17 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Entities.BlogPostTable", b =>
+                {
+                    b.HasOne("Core.Entities.CategoryTable", "Category")
+                        .WithMany("BlogPosts")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Core.Entities.StudentTable", b =>
                 {
                     b.HasOne("Core.Entities.ClassTable", "Class")
@@ -496,6 +563,11 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Entities.CategoryTable", b =>
+                {
+                    b.Navigation("BlogPosts");
                 });
 
             modelBuilder.Entity("Core.Entities.ClassTable", b =>

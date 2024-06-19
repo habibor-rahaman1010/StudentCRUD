@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class UseAuthentication : Migration
+    public partial class Authentication : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,6 +50,18 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,6 +186,29 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BlogPosts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Author = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogPosts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BlogPosts_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
                 {
@@ -201,8 +236,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "86829880-ebec-45e3-b11a-b69a402d8007", "7c577218-b19d-48b2-9042-5f445180e854", "admin", "admin" },
-                    { "8c3018a2-5322-4f38-854b-06104a34c692", "dd7c76dc-ad13-4f4d-be95-df7d89951777", "client", "client" }
+                    { "00548c01-6b7d-410d-a3e7-d5076919bf5b", "ebd7bc53-76af-46c0-9ac3-16e9c3ebddcf", "client", "client" },
+                    { "9cbb5734-34be-4a91-b7f0-2c9c21c17813", "68a92d34-db1b-45f3-b903-6437f460ae20", "admin", "admin" }
                 });
 
             migrationBuilder.InsertData(
@@ -210,22 +245,22 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedDate", "ModificationDate", "Name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4170), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4170), "One" },
-                    { 2, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4172), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4173), "Two" },
-                    { 3, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4174), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4175), "Three" },
-                    { 4, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4176), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4177), "Four" },
-                    { 5, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4178), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4178), "Five" },
-                    { 6, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4180), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4180), "Six" },
-                    { 7, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4181), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4182), "Seven" },
-                    { 8, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4183), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4183), "Eight" },
-                    { 9, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4185), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4185), "Nine" },
-                    { 10, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4186), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4186), "Ten" },
-                    { 11, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4189), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4189), "Colleage First Year" },
-                    { 12, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4191), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4191), "Colleg Second Year" },
-                    { 13, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4192), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4192), "BSc In CSE" },
-                    { 14, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4194), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4194), "BSc In EEE" },
-                    { 15, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4195), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4195), "BSc In CS" },
-                    { 16, new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4197), new DateTime(2024, 6, 10, 17, 59, 58, 993, DateTimeKind.Local).AddTicks(4197), "BSc In Civil" }
+                    { 1, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1826), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1826), "One" },
+                    { 2, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1828), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1828), "Two" },
+                    { 3, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1830), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1830), "Three" },
+                    { 4, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1831), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1832), "Four" },
+                    { 5, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1833), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1833), "Five" },
+                    { 6, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1834), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1835), "Six" },
+                    { 7, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1836), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1836), "Seven" },
+                    { 8, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1838), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1838), "Eight" },
+                    { 9, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1839), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1839), "Nine" },
+                    { 10, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1841), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1841), "Ten" },
+                    { 11, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1842), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1843), "Colleage First Year" },
+                    { 12, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1844), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1844), "Colleg Second Year" },
+                    { 13, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1845), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1846), "BSc In CSE" },
+                    { 14, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1847), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1847), "BSc In EEE" },
+                    { 15, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1848), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1849), "BSc In CS" },
+                    { 16, new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1850), new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1850), "BSc In Civil" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -268,6 +303,11 @@ namespace Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BlogPosts_CategoryId",
+                table: "BlogPosts",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Students_ClassId",
                 table: "Students",
                 column: "ClassId");
@@ -291,6 +331,9 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BlogPosts");
+
+            migrationBuilder.DropTable(
                 name: "Students");
 
             migrationBuilder.DropTable(
@@ -298,6 +341,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Classes");

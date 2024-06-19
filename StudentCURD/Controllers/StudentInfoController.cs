@@ -24,6 +24,7 @@ namespace StudentCURD.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> StudentInfoAdd(AddStudentViewModel addStudentViewModel)
         {
             StudentTable student = new StudentTable();
@@ -58,6 +59,7 @@ namespace StudentCURD.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(StudentTable viewModel)
         {
             if (_unitOfWork.StudentInfo != null)
@@ -79,6 +81,7 @@ namespace StudentCURD.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost("{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(StudentTable viewModel)
         {
             if (_unitOfWork.StudentInfo != null)
@@ -105,7 +108,7 @@ namespace StudentCURD.Controllers
                     return View(student);
                 }
             }
-            return View();
+            return BadRequest();
         }
     }
 }

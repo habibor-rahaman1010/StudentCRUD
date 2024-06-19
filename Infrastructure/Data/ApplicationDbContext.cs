@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Core.Interface;
 
 
 namespace Infrastructure.Data
@@ -15,6 +16,8 @@ namespace Infrastructure.Data
     {
         public DbSet<StudentTable>? Students { get; set; }
         public DbSet<ClassTable>? Classes { get; set; }
+        public DbSet<CategoryTable>? Categories { get; set; }
+        public DbSet<BlogPostTable>? BlogPosts { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         { 
@@ -24,7 +27,6 @@ namespace Infrastructure.Data
         //We here built a relationship using fluent API.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             var admin = new IdentityRole("admin");
             admin.NormalizedName = "admin";
 
@@ -32,10 +34,6 @@ namespace Infrastructure.Data
             client.NormalizedName = "client";
 
             modelBuilder.Entity<IdentityRole>().HasData(admin, client);
-
-           /* modelBuilder.Entity<IdentityUserLogin<string>>().HasNoKey();
-            modelBuilder.Entity<IdentityUserToken<string>>().HasNoKey();
-            modelBuilder.Entity<IdentityUserRole<string>>().HasNoKey();*/
 
             modelBuilder.Entity<StudentTable>()
                 .HasOne(s => s.Class)
@@ -63,40 +61,70 @@ namespace Infrastructure.Data
 
             modelBuilder.Entity<StudentTable>(entity =>
             {
-                
-                // Name should not be null or empty
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(100);
 
-                // Gender should be either 0 or 1 (assuming 0 for Male and 1 for Female)
                 entity.Property(e => e.Gender)
                     .IsRequired()
-                    .HasDefaultValue(0); // Set default value to 0
+                    .HasDefaultValue(0);
                     
-                // DOB should be in the past
                 entity.Property(e => e.DOB)
                     .IsRequired()
-                    .HasDefaultValueSql("GETDATE()") // Set default value to current date
+                    .HasDefaultValueSql("GETDATE()")
                     .HasColumnType("date")
                     .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc))
                     .HasAnnotation("Comment", "Date of Birth");
 
-                // ClassId should be greater than 0
                 entity.Property(e => e.ClassId)
                     .IsRequired()
-                    .HasDefaultValue(1); // Set default value to 1
+                    .HasDefaultValue(1);
 
-                // CreatedDate should be in the past
                 entity.Property(e => e.CreatedDate)
                     .IsRequired()
-                    .HasDefaultValueSql("GETDATE()"); // Set default value to current date
+                    .HasDefaultValueSql("GETDATE()");
 
-                // ModificationDate should be in the past
                 entity.Property(e => e.ModificationDate)
                     .IsRequired()
-                    .HasDefaultValueSql("GETDATE()"); // Set default value to current date
+                    .HasDefaultValueSql("GETDATE()");
             });
+
+            modelBuilder.Entity<CategoryTable>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+
+                entity.Property(c => c.CategoryName)
+                      .IsRequired()
+                      .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<BlogPostTable>(entity =>
+            {
+                entity.HasKey(b => b.Id);
+
+                entity.Property(b => b.Title)
+                      .IsRequired()
+                      .HasMaxLength(200);
+
+                entity.Property(b => b.Content)
+                      .IsRequired();
+
+                entity.Property(b => b.Author)
+                      .HasMaxLength(100); 
+
+                entity.Property(b => b.Created)
+                      .HasDefaultValueSql("GETDATE()");
+
+                entity.Property(b => b.Updated)
+                      .HasDefaultValueSql("GETDATE()");
+
+                entity.HasOne(b => b.Category)
+                      .WithMany(c => c.BlogPosts)
+                      .HasForeignKey(b => b.CategoryId)
+                      .OnDelete(DeleteBehavior.Cascade); 
+            });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

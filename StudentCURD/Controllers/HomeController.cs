@@ -1,6 +1,5 @@
 ﻿using Core.Entities;
 using Core.Interface;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentCURD.Models;
 using System.Diagnostics;
@@ -18,15 +17,10 @@ namespace StudentCURD.Controllers
             this._unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> StudentList()
+        public async Task<IActionResult> StudentList(int page = 1)
         {
-            List<StudentTable> students;
-            if (_unitOfWork.StudentInfo != null)
-            {
-                students = await _unitOfWork.StudentInfo.GetAllAsync();
-                return View(students);
-            }
-            return View();
+            var data = await _unitOfWork.StudentInfo.GetAllByPageSizeAsync(page);
+            return View(data);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -9,6 +9,8 @@ namespace Core.Interface
     public interface IUnitOfWork : IDisposable
     {
         IStudentInfo StudentInfo { get; set; }
+        IBlogPost BlogPost { get; set; }
+        ICategory Category { get; set; }
         Task<int> CommitAsync();
     }
 }

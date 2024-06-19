@@ -1,0 +1,40 @@
+﻿@using Core.Entities;
+
+@model IEnumerable<BlogPostTable>
+
+
+<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 py-2">
+    @if (Model.Count() == 0)
+    {
+        <h3>The database is empty...</h3>
+    }
+    else
+    {
+        @foreach (var blog in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@blog.Title</h5>
+                        <p class="card-text">
+                            @{
+                                var contentPreview = string.IsNullOrEmpty(blog?.Content)
+                                ? string.Empty
+                                : blog.Content.Length > 50
+                                ? blog.Content.Substring(0, 50) + "..."
+                                : blog.Content;
+                            }
+                            @Html.Raw(contentPreview)
+                        </p>
+
+                        <p>Author - @blog?.Author</p>
+
+                        <a class="btn btn-primary" asp-controller="BlogPost" asp-action="Details" asp-route-id="@blog?.Id">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+

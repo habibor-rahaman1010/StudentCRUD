@@ -1,0 +1,76 @@
+﻿@using Core.Entities;
+@model BlogPostTable;
+
+<style>
+    #container {
+        width: 1000px;
+        margin: 20px auto;
+    }
+
+    .ck-editor__editable[role="textbox"] {
+        min-height: 300px;
+    }
+
+    .ck-content .image {
+        max-width: 80%;
+        margin: 20px auto;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <form class="mb-5" asp-action="Create">
+            <div class="text-danger" asp-validation-summary="All"></div>
+
+            <div class="form-group row mb-2">
+                <label asp-for="Category" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories">
+                        <option value="" selected>Select Category</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <label asp-for="Title" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="Title" class="form-control" placeholder="Title">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+            </div>
+
+             <div class="form-group row mb-2">
+                <label asp-for="Content" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <textarea asp-for="Content" placeholder="Description" id="editor"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <label asp-for="Author" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="Author" class="form-control" placeholder="Author Name">
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-9 mt-2">
+                    <button type="submit" class="btn btn-primary">Save Blog Post</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<a class="nav-link text-dark btn btn-primary w-25 text-white" asp-area="" asp-controller="BlogCategory" asp-action="Create">Add Category</a>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
