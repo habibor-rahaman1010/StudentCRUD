@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Core.Interface;
+using Infrastructure.Services;
 
 namespace StudentCURD
 {
@@ -6,7 +8,9 @@ namespace StudentCURD
     {
         protected override void Load(ContainerBuilder builder)
         {
-            base.Load(builder);
+            builder.RegisterType<FileService>()
+                 .As<IFileService>()
+                 .InstancePerLifetimeScope();
         }
     }
 }

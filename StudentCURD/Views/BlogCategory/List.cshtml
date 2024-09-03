@@ -10,7 +10,7 @@
     <div class="d-flex justify-content-between">
         <p><a class="btn btn-primary" asp-controller="BlogCategory" asp-action="GetBlogPostByCategoryWise" asp-route-categoryId="@category?.Id">@category?.CategoryName</a></p>
 
-        @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+        @if (SignInManager.IsSignedIn(User) && User.IsInRole("SUPERADMIN"))
         {
             <div class="d-flex jus">
                 <p> <a class="btn btn-primary mx-2" asp-controller="BlogCategory" asp-action="Update" asp-route-id="@category?.Id">Edit</a></p>

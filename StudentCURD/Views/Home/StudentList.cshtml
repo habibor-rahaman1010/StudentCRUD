@@ -56,12 +56,12 @@
                         <td>@(student.Gender == 0 ? "Male" : "Female")</td>
 
                         <td class="my_button">
-                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("SUPERADMIN"))
                             {
                                 <a class="btn btn-info" asp-controller="StudentInfo" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
                             }
                             <a class="btn btn-secondary" asp-controller="StudentInfo" asp-action="Detail" asp-route-id="@student.Id">Details</a>
-                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("SUPERADMIN"))
                             {
                                 <span>
                                     <form id="deleteForm" asp-controller="StudentInfo" asp-action="Delete" asp-route-id="@student.Id" method="post">

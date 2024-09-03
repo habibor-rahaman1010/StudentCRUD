@@ -15,14 +15,14 @@ namespace StudentCURD.Controllers
             this._unitOfWork = unitOfWork;
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         [HttpGet]
         public IActionResult StudentInfoAdd()
         {
             return View();
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> StudentInfoAdd(AddStudentViewModel addStudentViewModel)
@@ -45,7 +45,7 @@ namespace StudentCURD.Controllers
             return RedirectToAction("StudentList", "Home");
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -57,7 +57,7 @@ namespace StudentCURD.Controllers
             return View();
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(StudentTable viewModel)
@@ -79,7 +79,7 @@ namespace StudentCURD.Controllers
             return View();
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(StudentTable viewModel)

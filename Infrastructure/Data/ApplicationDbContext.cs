@@ -27,13 +27,72 @@ namespace Infrastructure.Data
         //We here built a relationship using fluent API.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var admin = new IdentityRole("admin");
-            admin.NormalizedName = "admin";
+            /*var superAdmin = new IdentityRole(ApplicationUserRoles.SUPERADMIN.ToString());
+            superAdmin.NormalizedName = ApplicationUserRoles.SUPERADMIN.ToString();
 
-            var client = new IdentityRole("client");
-            client.NormalizedName = "client";
+            var admin = new IdentityRole(ApplicationUserRoles.ADMIN.ToString());
+            admin.NormalizedName = ApplicationUserRoles.ADMIN.ToString();
 
-            modelBuilder.Entity<IdentityRole>().HasData(admin, client);
+            var user = new IdentityRole(ApplicationUserRoles.USER.ToString());
+            user.NormalizedName = ApplicationUserRoles.USER.ToString();
+
+            modelBuilder.Entity<IdentityRole>().HasData(superAdmin, admin, user);*/
+
+
+            // Seed Roles
+            var superAdminRoleId = Guid.NewGuid().ToString();
+            var adminRoleId = Guid.NewGuid().ToString();
+            var userRoleId = Guid.NewGuid().ToString();
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Id = superAdminRoleId,
+                    Name = "SUPERADMIN",
+                    NormalizedName = "SUPERADMIN"
+                },
+                new IdentityRole
+                {
+                    Id = adminRoleId,
+                    Name = "ADMIN",
+                    NormalizedName = "ADMIN"
+                },
+                new IdentityRole
+                {
+                    Id = userRoleId,
+                    Name = "USER",
+                    NormalizedName = "USER"
+                }
+            );
+
+
+            // Seed Users
+            var superAdminUserId = Guid.NewGuid().ToString();
+             var hasher = new PasswordHasher<ApplicationUser>();
+             var passwordHash = hasher.HashPassword(null, "superAdmin123@");
+
+             modelBuilder.Entity<ApplicationUser>().HasData(
+                 new ApplicationUser
+                 {
+                     Id = superAdminUserId,
+                     FirstName = "Habibor",
+                     LastName = "Rahaman",
+                     UserName = "habibor.rahaman1010@gmail.com",
+                     NormalizedUserName = "HABIBOR.RAHAMAN1010@GMAIL.COM",
+                     Email = "habibor.rahaman1010@gmail.com",
+                     NormalizedEmail = "HABIBOR.RAHAMAN1010@GMAIL.COM",
+                     EmailConfirmed = true,
+                     PhoneNumber = "01768280237",
+                     PhoneNumberConfirmed = true,
+                     PasswordHash = passwordHash
+                 }
+             );
+
+             // Seed UserRoles
+             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                 new IdentityUserRole<string> { UserId = superAdminUserId, RoleId = superAdminRoleId }
+             );
+
 
             modelBuilder.Entity<StudentTable>()
                 .HasOne(s => s.Class)

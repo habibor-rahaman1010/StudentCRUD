@@ -1,0 +1,19 @@
+﻿@using Core.ViewModel
+@model EditUserRolesViewModel
+
+<h2>Edit User Roles for @Model.Email</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <div class="form-group">
+        @for (int i = 0; i < Model.Roles.Count; i++)
+        {
+            <div>
+                <input type="checkbox" asp-for="@Model.Roles[i].IsSelected" id="role_@i" />
+                <label for="role_@i">@Model.Roles[i].RoleName</label>
+                <input type="hidden" name="Roles[@i].RoleName" value="@Model.Roles[i].RoleName" />
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

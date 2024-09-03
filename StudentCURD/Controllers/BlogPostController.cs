@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interface;
+using Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,14 +23,14 @@ namespace StudentCURD.Controllers
             return View(await allBlogs);
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         public async Task<IActionResult> Create()
         {
             ViewBag.Categories = new SelectList(await _unitOfWork.Category.GetAllAsync(), "Id", "CategoryName");
             return View();
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BlogPostTable blogPost)
@@ -70,7 +71,7 @@ namespace StudentCURD.Controllers
             return View();
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         public async Task<IActionResult> Update(Guid id)
         {
             var post = await _unitOfWork.BlogPost.GetByIdAsync(id);
@@ -78,7 +79,7 @@ namespace StudentCURD.Controllers
             return View(post);
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(BlogPostTable post)
@@ -100,7 +101,7 @@ namespace StudentCURD.Controllers
             return View();
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)

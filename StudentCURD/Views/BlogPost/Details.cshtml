@@ -18,7 +18,7 @@
             <p>@Html.Raw(Model?.Content)</p>
         </div>
     </section>
-    @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("SUPERADMIN"))
     {
         <div class="mb-4 px-4 d-flex">
             <div>

@@ -20,13 +20,13 @@ namespace StudentCURD.Controllers
             return View(await _unitOfWork.Category.GetAllAsync());
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CategoryTable category)
@@ -58,7 +58,7 @@ namespace StudentCURD.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         public async Task<IActionResult> Update(Guid id)
         {
             var category = await _unitOfWork.Category.GetByIdAsync(id);
@@ -67,7 +67,7 @@ namespace StudentCURD.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         public async Task<IActionResult> Update(Guid id, CategoryTable category)
         {
             if (ModelState.IsValid)
@@ -88,7 +88,7 @@ namespace StudentCURD.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "SUPERADMIN")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var existingCategory = await _unitOfWork.Category.GetByIdAsync(id);

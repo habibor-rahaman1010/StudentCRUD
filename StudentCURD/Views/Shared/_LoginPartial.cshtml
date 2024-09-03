@@ -6,15 +6,28 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-        <li class="nav-item">
-            @if (User.IsInRole("admin"))
-            {
-                <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User) | Admin</a>
-            }
-            else
-            {
-                <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User) | Client</a>
-            }
+    var user = await UserManager.GetUserAsync(User);
+    var profilePictureUrl = !string.IsNullOrEmpty(user?.ProfilePicture) ? user?.ProfilePicture : "29afadc0-c025-427a-96de-f9116d5d15e8.jpg";
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            <img src="/Uploads/Profile/@profilePictureUrl" alt="Profile Picture" class="rounded-circle" width="30" height="30" />
+        </a>
+    </li>
+
+    <li class="nav-item">
+        @if (User.IsInRole("SUPERADMIN"))
+        {
+            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User) | Super Admin</a>
+        }
+        else if (User.IsInRole("ADMIN"))
+        {
+            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User) | Admin</a>
+        }
+        else
+        {
+            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User) | User</a>
+        }
         </li>
     <li class="nav-item">
             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("StudentList", "Home", new { area = "" })">

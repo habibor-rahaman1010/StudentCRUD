@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240612144946_Authentication")]
-    partial class Authentication
+    [Migration("20240903035846_userRoles")]
+    partial class userRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.31")
+                .HasAnnotation("ProductVersion", "6.0.33")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -81,11 +81,18 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ProfilePicture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -102,6 +109,31 @@ namespace Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "27076d17-0839-409d-8747-d078050c83ea",
+                            AccessFailedCount = 0,
+                            Address = "",
+                            ConcurrencyStamp = "433d47ad-7d5a-49f2-9f27-2529eeb45660",
+                            CreatedAt = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(8406),
+                            Email = "habibor.rahaman1010@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Habibor",
+                            LastName = "Rahaman",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HABIBOR.RAHAMAN1010@GMAIL.COM",
+                            NormalizedUserName = "HABIBOR.RAHAMAN1010@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEsm0XNBgWmWekZRxnWb8irOJooJl9tO8yNhfrTMSaqlWo8w1FQDpArUrL+OGX23Zw==",
+                            PhoneNumber = "01768280237",
+                            PhoneNumberConfirmed = true,
+                            ProfilePicture = "",
+                            SecurityStamp = "cfdb5bc0-c21a-401e-bdb5-a4786ddf605c",
+                            TwoFactorEnabled = false,
+                            UpdateAt = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(8415),
+                            UserName = "habibor.rahaman1010@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.BlogPostTable", b =>
@@ -186,113 +218,113 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1826),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1826),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9519),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9520),
                             Name = "One"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1828),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1828),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9522),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9522),
                             Name = "Two"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1830),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1830),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9552),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9552),
                             Name = "Three"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1831),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1832),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9553),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9554),
                             Name = "Four"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1833),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1833),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9555),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9555),
                             Name = "Five"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1834),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1835),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9557),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9557),
                             Name = "Six"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1836),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1836),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9558),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9559),
                             Name = "Seven"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1838),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1838),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9560),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9560),
                             Name = "Eight"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1839),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1839),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9561),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9562),
                             Name = "Nine"
                         },
                         new
                         {
                             Id = 10,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1841),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1841),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9563),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9563),
                             Name = "Ten"
                         },
                         new
                         {
                             Id = 11,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1842),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1843),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9564),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9565),
                             Name = "Colleage First Year"
                         },
                         new
                         {
                             Id = 12,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1844),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1844),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9566),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9566),
                             Name = "Colleg Second Year"
                         },
                         new
                         {
                             Id = 13,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1845),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1846),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9568),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9568),
                             Name = "BSc In CSE"
                         },
                         new
                         {
                             Id = 14,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1847),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1847),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9569),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9570),
                             Name = "BSc In EEE"
                         },
                         new
                         {
                             Id = 15,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1848),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1849),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9571),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9571),
                             Name = "BSc In CS"
                         },
                         new
                         {
                             Id = 16,
-                            CreatedDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1850),
-                            ModificationDate = new DateTime(2024, 6, 12, 20, 49, 45, 903, DateTimeKind.Local).AddTicks(1850),
+                            CreatedDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9572),
+                            ModificationDate = new DateTime(2024, 9, 3, 9, 58, 46, 464, DateTimeKind.Local).AddTicks(9573),
                             Name = "BSc In Civil"
                         });
                 });
@@ -370,17 +402,24 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9cbb5734-34be-4a91-b7f0-2c9c21c17813",
-                            ConcurrencyStamp = "68a92d34-db1b-45f3-b903-6437f460ae20",
-                            Name = "admin",
-                            NormalizedName = "admin"
+                            Id = "110b8bbf-002e-4d12-abdb-09b377339b69",
+                            ConcurrencyStamp = "5f11b9db-23bf-42f1-9d97-11412a8356d3",
+                            Name = "SUPERADMIN",
+                            NormalizedName = "Super Admin"
                         },
                         new
                         {
-                            Id = "00548c01-6b7d-410d-a3e7-d5076919bf5b",
-                            ConcurrencyStamp = "ebd7bc53-76af-46c0-9ac3-16e9c3ebddcf",
-                            Name = "client",
-                            NormalizedName = "client"
+                            Id = "e172b5f2-22dc-4b6e-909f-3aee39448590",
+                            ConcurrencyStamp = "ce4b91ab-385c-4d20-979d-3d6234647daf",
+                            Name = "ADMIN",
+                            NormalizedName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "983deed1-65a4-4a9d-ac53-f09d2b419df7",
+                            ConcurrencyStamp = "7d8bd21b-3ca8-46d8-a9d9-9e332a5275de",
+                            Name = "USER",
+                            NormalizedName = "User"
                         });
                 });
 
@@ -471,6 +510,13 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "27076d17-0839-409d-8747-d078050c83ea",
+                            RoleId = "110b8bbf-002e-4d12-abdb-09b377339b69"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

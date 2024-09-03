@@ -33,7 +33,11 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="BlogPost" asp-action="List">Blogs</a>
                         </li>
 
-                        @if(SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="RoleManagement" asp-action="Index">Role Management</a>
+                        </li>
+
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("SUPERADMIN"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="StudentInfo" asp-action="StudentInfoAdd">Add Student</a>
