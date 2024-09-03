@@ -17,20 +17,20 @@ namespace StudentCURD.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(int page = 1)
         {
-            Task<List<BlogPostTable>> allBlogs = _unitOfWork.BlogPost.GetAllAsync();
-            return View(await allBlogs);
+            var allBlogs = await _unitOfWork.BlogPost.GetAllByPageSizeAsync(page);
+            return View(allBlogs);
         }
 
-        [Authorize(Roles = "SUPERADMIN")]
+        [Authorize(Roles = "SUPERADMIN, ADMIN")]
         public async Task<IActionResult> Create()
         {
             ViewBag.Categories = new SelectList(await _unitOfWork.Category.GetAllAsync(), "Id", "CategoryName");
             return View();
         }
 
-        [Authorize(Roles = "SUPERADMIN")]
+        [Authorize(Roles = "SUPERADMIN ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BlogPostTable blogPost)

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace StudentCURD.Controllers
 {
-   
     public class StudentInfoController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -15,14 +14,14 @@ namespace StudentCURD.Controllers
             this._unitOfWork = unitOfWork;
         }
 
-        [Authorize(Roles = "SUPERADMIN")]
+        [Authorize(Roles = "SUPERADMIN, ADMIN")]
         [HttpGet]
         public IActionResult StudentInfoAdd()
         {
             return View();
         }
 
-        [Authorize(Roles = "SUPERADMIN")]
+        [Authorize(Roles = "SUPERADMIN, ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> StudentInfoAdd(AddStudentViewModel addStudentViewModel)

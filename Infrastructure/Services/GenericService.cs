@@ -28,7 +28,7 @@ namespace Infrastructure.Services
         public async Task<PagerViewModel<T>> GetAllByPageSizeAsync(int page = 1)
         {
             var students =  await _context.Set<T>().ToListAsync();
-            const int pageSize = 5;
+            const int pageSize = 12;
             if (page < 1)
             {
                 page = 1;
@@ -41,6 +41,7 @@ namespace Infrastructure.Services
             var viewModel = new PagerViewModel<T>
             {
                 Students = data,
+                Blogs = data,
                 Pager = pager
             };
             return viewModel;

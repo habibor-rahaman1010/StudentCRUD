@@ -4,9 +4,11 @@ using Core.Entities;
 using System.Threading.Tasks;
 using System.Linq;
 using Core.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StudentCURD.Controllers
 {
+    [Authorize(Roles = "SUPERADMIN")]
     public class RoleManagementController : Controller
     {
 
@@ -90,7 +92,7 @@ namespace StudentCURD.Controllers
                 ModelState.AddModelError("", "Failed to remove roles.");
                 return View(model);
             }
-            await _signInManager.RefreshSignInAsync(user);
+            //await _signInManager.RefreshSignInAsync(user);
             return RedirectToAction("Index");
         }
     }
