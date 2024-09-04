@@ -8,7 +8,7 @@ namespace Core.Entities
 {
     public class Pager
     {
-        public int TotalItem {  get; set; } 
+        public int TotalItem { get; set; }
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
         public int TotalPages { get; set; }

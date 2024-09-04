@@ -26,28 +26,32 @@ namespace StudentCURD.Controllers
 
         public async Task<IActionResult> StudentList(string searchQuery, int page = 1)
         {
-            // Retrieve paginated results
-            var paginatedResult = await _unitOfWork.StudentInfo.GetAllByPageSizeAsync(page);
+            var allStudents = await _unitOfWork.StudentInfo.GetAllAsync();
 
-            // Filter students based on the search query
             if (!string.IsNullOrEmpty(searchQuery))
             {
-                paginatedResult.Students = paginatedResult.Students
+                allStudents = allStudents
                     .Where(s => s.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
                     .ToList();
             }
 
-            // Prepare the view model
+            var totalItems = allStudents.Count();
+
+            var studentsToDisplay = allStudents
+                .Skip((page - 1) * 12)
+                .Take(12)
+                .ToList();
+
             var model = new PagerViewModel<StudentTable>
             {
-                Students = paginatedResult.Students.ToList(),
+                Students = studentsToDisplay,
                 SearchQuery = searchQuery,
-                Pager = new Pager(paginatedResult.Students.Count(), page, 12)
+                Pager = new Pager(totalItems, page, 12)
             };
 
-            // Pass the view model to the view
             return View(model);
         }
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -27,26 +27,35 @@ namespace StudentCURD.Controllers
 
         public async Task<IActionResult> List(string searchQuery, int page = 1)
         {
-            var paginatedResult = await _unitOfWork.BlogPost.GetAllByPageSizeAsync(page);
+            var allBlogs = await _unitOfWork.BlogPost.GetAllAsync();
 
             if (!string.IsNullOrEmpty(searchQuery))
             {
-                paginatedResult.Blogs = paginatedResult.Blogs
+                allBlogs = allBlogs
                     .Where(b => b.Title.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
                                 b.Content.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
                     .ToList();
             }
 
+            var totalItems = allBlogs.Count();
+
+            var blogsToDisplay = allBlogs
+                .Skip((page - 1) * 12)
+                .Take(12)
+                .ToList();
+
+            var pager = new Pager(totalItems, page, 12);
+
             var model = new PagerViewModel<BlogPostTable>
             {
-                Blogs = paginatedResult.Blogs.ToList(),
+                Blogs = blogsToDisplay,
                 SearchQuery = searchQuery,
-                Pager = new Pager(paginatedResult.Blogs.Count(), page, 12)
+                Pager = pager
             };
-            paginatedResult.SearchQuery = string.Empty;
 
             return View(model);
         }
+
 
 
         [Authorize(Roles = "SUPERADMIN, ADMIN")]
