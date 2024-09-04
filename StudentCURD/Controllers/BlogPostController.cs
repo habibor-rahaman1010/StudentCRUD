@@ -45,7 +45,7 @@ namespace StudentCURD.Controllers
             };
             paginatedResult.SearchQuery = string.Empty;
 
-            return View(paginatedResult);
+            return View(model);
         }
 
 

@@ -46,7 +46,7 @@ namespace StudentCURD.Controllers
             };
 
             // Pass the view model to the view
-            return View(paginatedResult);
+            return View(model);
         }
 
 
