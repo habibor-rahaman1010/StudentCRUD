@@ -27,18 +27,6 @@ namespace Infrastructure.Data
         //We here built a relationship using fluent API.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*var superAdmin = new IdentityRole(ApplicationUserRoles.SUPERADMIN.ToString());
-            superAdmin.NormalizedName = ApplicationUserRoles.SUPERADMIN.ToString();
-
-            var admin = new IdentityRole(ApplicationUserRoles.ADMIN.ToString());
-            admin.NormalizedName = ApplicationUserRoles.ADMIN.ToString();
-
-            var user = new IdentityRole(ApplicationUserRoles.USER.ToString());
-            user.NormalizedName = ApplicationUserRoles.USER.ToString();
-
-            modelBuilder.Entity<IdentityRole>().HasData(superAdmin, admin, user);*/
-
-
             // Seed Roles
             var superAdminRoleId = Guid.NewGuid().ToString();
             var adminRoleId = Guid.NewGuid().ToString();
