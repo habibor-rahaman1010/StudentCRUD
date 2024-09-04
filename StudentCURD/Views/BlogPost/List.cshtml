@@ -2,6 +2,13 @@
 @using Ganss.Xss
 @model Core.ViewModel.PagerViewModel<BlogPostTable>
 
+<form method="get" asp-controller="BlogPost" asp-action="List" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="searchQuery" class="form-control" placeholder="Search blog posts..." value="@Model.SearchQuery">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </div>
+</form>
+
 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 py-2">
     @if (Model?.Blogs?.Count() <= 0)
     {
@@ -41,4 +48,9 @@
 </div>
 <partial name="_BlogPagerPartial">
 
+<script>
+    function clearSearchInput() {
+        document.getElementById('searchInput').value = '';
+    }
+</script>
 

@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interface;
+using Core.ViewModel;
 using Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,36 @@ namespace StudentCURD.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> List(int page = 1)
+        /*public async Task<IActionResult> List(int page = 1)
         {
             var allBlogs = await _unitOfWork.BlogPost.GetAllByPageSizeAsync(page);
             return View(allBlogs);
         }
+        */
+
+        public async Task<IActionResult> List(string searchQuery, int page = 1)
+        {
+            var paginatedResult = await _unitOfWork.BlogPost.GetAllByPageSizeAsync(page);
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                paginatedResult.Blogs = paginatedResult.Blogs
+                    .Where(b => b.Title.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+                                b.Content.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            var model = new PagerViewModel<BlogPostTable>
+            {
+                Blogs = paginatedResult.Blogs.ToList(),
+                SearchQuery = searchQuery,
+                Pager = new Pager(paginatedResult.Blogs.Count(), page, 12)
+            };
+            paginatedResult.SearchQuery = string.Empty;
+
+            return View(paginatedResult);
+        }
+
 
         [Authorize(Roles = "SUPERADMIN, ADMIN")]
         public async Task<IActionResult> Create()
@@ -30,7 +56,7 @@ namespace StudentCURD.Controllers
             return View();
         }
 
-        [Authorize(Roles = "SUPERADMIN ADMIN")]
+        [Authorize(Roles = "SUPERADMIN, ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BlogPostTable blogPost)

@@ -18,6 +18,13 @@
 <div class="text-center">
     <h2 class="display-5 mb-4">Welcome Students</h2>
 
+    <form method="get" asp-controller="Home" asp-action="StudentList" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="searchQuery" class="form-control" placeholder="Search blog posts..." value="@Model.SearchQuery">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </form>
+
     <table class="table">
         <thead>
             <tr>
@@ -79,3 +86,9 @@
     <partial name="_PagerPartial">
 
 </div>
+
+<script>
+    function clearSearchInput() {
+        document.getElementById('searchInput').value = '';
+    }
+</script>
