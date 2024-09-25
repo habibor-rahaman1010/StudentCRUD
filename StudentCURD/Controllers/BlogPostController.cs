@@ -33,8 +33,8 @@ namespace StudentCURD.Controllers
             {
                 allBlogs = allBlogs
                     .Where(b => b.Title.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
-                                b.Content.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
-                    .ToList();
+                                b.Content.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+                                b.Author.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
             var totalItems = allBlogs.Count();
